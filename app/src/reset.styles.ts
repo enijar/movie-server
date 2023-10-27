@@ -3,6 +3,10 @@
 import { createGlobalStyle } from "styled-components";
 
 export const Reset = createGlobalStyle`
+  :root {
+    --color-primary: #3263b9;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -16,8 +20,8 @@ export const Reset = createGlobalStyle`
   }
 
   html, body {
-    width: 100%;
-    height: 100%;
+    inline-size: 100%;
+    block-size: 100%;
     overflow: hidden;
   }
 
@@ -26,5 +30,17 @@ export const Reset = createGlobalStyle`
     font-size: 20px;
     color: #f0f0f0;
     background-color: #0f0f0f;
+    color-scheme: light dark;
+
+    @media (prefers-color-scheme: light) {
+      color: #0f0f0f;
+      background-color: #f0f0f0;
+    }
+  }
+
+  a, button {
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
   }
 `;

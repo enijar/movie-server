@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "concurrently -n app 'npm --prefix app install'",
-    "start": "concurrently -n app 'npm --prefix app run dev'",
-    "build": "concurrently -n app 'npm --prefix app run build'"
+    "postinstall": "concurrently -n cms,app 'npm --prefix cms install' 'npm --prefix app install'",
+    "start": "concurrently -n cms,app 'npm --prefix cms run develop' 'npm --prefix app run dev'",
+    "build": "concurrently -n cms,app 'npm --prefix cms run build' 'npm --prefix app run build'"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
