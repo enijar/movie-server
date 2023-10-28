@@ -13,6 +13,7 @@
     "@strapi/plugin-i18n": "4.15.0",
     "@strapi/plugin-users-permissions": "4.15.0",
     "@strapi/strapi": "4.15.0",
+    "bcrypt": "^5.1.1",
     "better-sqlite3": "8.6.0",
     "mysql2": "^3.6.2"
   },
@@ -26,5 +27,8 @@
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.1"
+  }
 }

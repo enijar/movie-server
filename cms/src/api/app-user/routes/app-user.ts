@@ -2,6 +2,18 @@
  * app-user router
  */
 
-import { factories } from '@strapi/strapi';
+const router = {
+  routes: [
+    {
+      method: "POST",
+      path: "/app-user/login",
+      handler: "app-user.login",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+  ],
+};
 
-export default factories.createCoreRouter('api::app-user.app-user');
+export default router;

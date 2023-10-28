@@ -12,7 +12,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function RootLayout(props: Props) {
+export default async function RootLayout(props: Props) {
   return (
     <html lang="en">
       <body>
