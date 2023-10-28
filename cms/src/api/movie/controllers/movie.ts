@@ -185,10 +185,13 @@ export default factories.createCoreController(
         if (isNaN(pageSize)) {
           pageSize = 10;
         }
-        return await strapi.entityService.findPage("api::movie.movie", {
+        return strapi.entityService.findPage("api::movie.movie", {
           page,
           pageSize,
         });
+      },
+      async findOne(ctx) {
+        return strapi.entityService.findOne("api::movie.movie", ctx.params.id);
       },
       async update() {
         await updateMovies(strapi);

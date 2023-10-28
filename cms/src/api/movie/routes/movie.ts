@@ -15,6 +15,15 @@ export default {
     },
     {
       method: "GET",
+      path: "/movies/:id",
+      handler: "movie.findOne",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: "GET",
       path: "/movie/update",
       handler: "movie.update",
       config: {
