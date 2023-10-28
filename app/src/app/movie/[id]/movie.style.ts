@@ -8,14 +8,4 @@ export const Wrapper = styled.main`
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable;
-  display: grid;
-  grid-template-columns: minmax(max-content, 15rem);
-  grid-template-rows: max-content;
-  place-content: center;
-  padding: 1rem;
-
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-  }
 `;
