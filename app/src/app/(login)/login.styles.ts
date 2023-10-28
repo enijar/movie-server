@@ -43,6 +43,7 @@ export const Wrapper = styled.main`
   block-size: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
   display: grid;
   grid-template-columns: minmax(max-content, 15rem);
   grid-template-rows: max-content;
