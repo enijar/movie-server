@@ -183,15 +183,18 @@ export default factories.createCoreController(
           page = 1;
         }
         if (isNaN(pageSize)) {
-          pageSize = 10;
+          pageSize = 50;
         }
         return strapi.entityService.findPage("api::movie.movie", {
           page,
           pageSize,
+          populate: "*",
         });
       },
       async findOne(ctx) {
-        return strapi.entityService.findOne("api::movie.movie", ctx.params.id);
+        return strapi.entityService.findOne("api::movie.movie", ctx.params.id, {
+          populate: "*",
+        });
       },
       async update() {
         await updateMovies(strapi);

@@ -28,6 +28,7 @@ export const Reset = createGlobalStyle`
   html {
     font-family: system-ui, sans-serif;
     font-size: 20px;
+    line-height: 1.2;
     color: #f0f0f0;
     background-color: #0f0f0f;
     color-scheme: light dark;

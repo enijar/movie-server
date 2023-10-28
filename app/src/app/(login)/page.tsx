@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import * as Style from "@/app/(login)/login.styles";
+import * as Style from "@/app/(login)/login.style";
 
 export default function Login() {
   const [errors, setErrors] = React.useState<string[]>([]);

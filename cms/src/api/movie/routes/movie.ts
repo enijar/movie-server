@@ -15,7 +15,7 @@ export default {
     },
     {
       method: "GET",
-      path: "/movies/:id",
+      path: "/movie/:id",
       handler: "movie.findOne",
       config: {
         policies: [],
