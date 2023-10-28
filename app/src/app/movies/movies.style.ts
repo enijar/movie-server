@@ -61,5 +61,4 @@ export const Wrapper = styled.main`
   block-size: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-gutter: stable;
 `;

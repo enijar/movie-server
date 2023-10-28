@@ -3,22 +3,12 @@ import { z } from "zod";
 import * as Style from "@/app/movies/movies.style";
 import { api, auth } from "@/util";
 import Rating from "@/components/rating/rating";
+import { movieScheme } from "@/types";
 
 const hostname = "yts.proxyninja.net";
 
 const schema = z.object({
-  results: z.array(
-    z.object({
-      id: z.number(),
-      title: z.string(),
-      year: z.string(),
-      synopsis: z.string(),
-      rating: z.number(),
-      poster: z.object({
-        url: z.string(),
-      }),
-    }),
-  ),
+  results: z.array(movieScheme),
   pagination: z.object({
     page: z.number(),
     pageSize: z.number(),
