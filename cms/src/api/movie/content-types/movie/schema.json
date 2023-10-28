@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "movies",
+  "info": {
+    "singularName": "movie",
+    "pluralName": "movies",
+    "displayName": "Movie",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "synopsis": {
+      "type": "text"
+    },
+    "rating": {
+      "type": "decimal",
+      "required": true
+    },
+    "year": {
+      "type": "date",
+      "required": true
+    },
+    "poster": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "ytsId": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    },
+    "torrents": {
+      "type": "json",
+      "required": false
+    },
+    "uuid": {
+      "type": "uid",
+      "targetField": "ytsId"
+    }
+  }
+}

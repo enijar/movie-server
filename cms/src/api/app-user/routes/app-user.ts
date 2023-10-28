@@ -2,7 +2,7 @@
  * app-user router
  */
 
-const router = {
+export default {
   routes: [
     {
       method: "POST",
@@ -15,5 +15,3 @@ const router = {
     },
   ],
 };
-
-export default router;
