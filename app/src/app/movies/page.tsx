@@ -5,8 +5,6 @@ import { api, auth } from "@/util";
 import Rating from "@/components/rating/rating";
 import { movieScheme } from "@/types";
 
-const hostname = "yts.proxyninja.net";
-
 const schema = z.object({
   results: z.array(movieScheme),
   pagination: z.object({
@@ -24,23 +22,6 @@ export default async function Movies() {
   }
   const res = await api("/api/movies", { method: "GET" });
   const data = schema.parse(await res.json());
-  data.results = data.results.map((result) => {
-    let posterUrl = result.poster.url;
-    if (result.poster.url.startsWith("http")) {
-      const url = new URL(posterUrl);
-      url.hostname = hostname;
-      if (!url.searchParams.has("v")) {
-        url.searchParams.set("v", "1");
-      }
-      posterUrl = url.toString();
-    } else {
-      posterUrl = `${process.env.CMS_URL ?? ""}${result.poster.url}`;
-    }
-    return {
-      ...result,
-      poster: { ...result.poster, url: posterUrl },
-    };
-  });
   return (
     <Style.Wrapper>
       <Style.MovieCards>
@@ -48,7 +29,7 @@ export default async function Movies() {
           const [year] = movie.year.split("-");
           return (
             <Style.MovieCard key={movie.id} href={`/movie/${movie.id}`}>
-              <img src={movie.poster.url} alt="" loading="lazy" />
+              <img src={movie.poster} alt="" loading="lazy" />
               <Style.MovieCardInfo>
                 <Rating rating={movie.rating} />
                 <time>{year}</time>

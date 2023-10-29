@@ -16,23 +16,10 @@ export default async function Movie(props: Props) {
   const res = await api(`/api/movie/${props.params.id}`, { method: "GET" });
   const video = movieScheme.parse(await res.json());
 
-  const hostname = "yts.proxyninja.net";
-  let posterUrl = video.poster.url;
-  if (video.poster.url.startsWith("http")) {
-    const url = new URL(posterUrl);
-    url.hostname = hostname;
-    if (!url.searchParams.has("v")) {
-      url.searchParams.set("v", "1");
-    }
-    posterUrl = url.toString();
-  } else {
-    posterUrl = `${process.env.CMS_URL ?? ""}${video.poster.url}`;
-  }
-
   return (
     <Style.Wrapper>
       <Style.Container>
-        <Video {...video} posterUrl={posterUrl} />
+        <Video {...video} />
       </Style.Container>
     </Style.Wrapper>
   );

@@ -6,9 +6,7 @@ export const movieScheme = z.object({
   year: z.string(),
   synopsis: z.string(),
   rating: z.number(),
-  poster: z.object({
-    url: z.string(),
-  }),
+  poster: z.string(),
 });
 
 export type MovieType = z.infer<typeof movieScheme>;

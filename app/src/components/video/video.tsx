@@ -7,9 +7,7 @@ import { type MovieType } from "@/types";
 import Rating from "@/components/rating/rating";
 import BackIcon from "@/icons/back-icon";
 
-type Props = MovieType & {
-  posterUrl: string;
-};
+type Props = MovieType;
 
 export default function Video(props: Props) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -38,7 +36,7 @@ export default function Video(props: Props) {
         <BackIcon />
         <span>Back to movies</span>
       </Style.Back>
-      <video ref={videoRef} poster={props.posterUrl} />
+      <video ref={videoRef} poster={props.poster} />
       <h1>{props.title}</h1>
       <Style.Info>
         <Rating rating={props.rating} />
