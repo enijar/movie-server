@@ -7,7 +7,6 @@ import Search from "@/components/search/search";
 import Rating from "@/components/rating/rating";
 
 async function fetchMovies(query: string, page: number) {
-  console.log("fetchMovies");
   const res = await fetch(`/api/search?query=${query}&page=${page}`);
   const json = await res.json();
   return moviesListSchema.parse(json);
