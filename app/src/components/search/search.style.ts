@@ -19,6 +19,7 @@ export const SearchWrapper = styled.div`
     background-color: transparent;
     border: none;
     padding: 0;
+    color: var(--color-primary);
 
     &:last-child {
       svg {
