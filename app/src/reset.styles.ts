@@ -5,6 +5,13 @@ import { createGlobalStyle } from "styled-components";
 export const Reset = createGlobalStyle`
   :root {
     --color-primary: #3263b9;
+    --color-background: #0f0f0f;
+    --color-text: #f0f0f0;
+
+    @media (prefers-color-scheme: light) {
+      --color-text: #0f0f0f;
+      --color-background: #f0f0f0;
+    }
   }
 
   * {
@@ -29,14 +36,9 @@ export const Reset = createGlobalStyle`
     font-family: system-ui, sans-serif;
     font-size: 20px;
     line-height: 1.2;
-    color: #f0f0f0;
-    background-color: #0f0f0f;
+    color: var(--color-text);
+    background-color: var(--color-background);
     color-scheme: light dark;
-
-    @media (prefers-color-scheme: light) {
-      color: #0f0f0f;
-      background-color: #f0f0f0;
-    }
   }
 
   a, button {

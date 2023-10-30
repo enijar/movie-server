@@ -9,7 +9,7 @@ import { z } from "zod";
 import sharp from "sharp";
 
 const API_RESULTS_LIMIT = 50;
-const SEARCH_RESULTS_LIMIT = 10;
+const RESULTS_LIMIT = 50;
 const DELAY_BETWEEN_PAGES = 0;
 
 const schema = z.object({
@@ -42,6 +42,7 @@ function fixPosterUrl(posterUrl: string) {
   }
   const url = new URL(posterUrl);
   url.hostname = hostname;
+  url.searchParams.set("v", "0.1");
   return url.toString();
 }
 
@@ -137,6 +138,7 @@ async function updateMovies(strapi: Strapi, page = 1) {
         torrents: movie.torrents.map((torrent) => {
           const url = new URL(torrent.url);
           url.hostname = hostname;
+          url.searchParams.set("v", "0.1");
           return {
             ...torrent,
             url: url.toString(),
@@ -193,7 +195,7 @@ export default factories.createCoreController(
           page = 1;
         }
         if (isNaN(pageSize)) {
-          pageSize = 50;
+          pageSize = RESULTS_LIMIT;
         }
         const res = await strapi.entityService.findPage("api::movie.movie", {
           page,
@@ -229,8 +231,8 @@ export default factories.createCoreController(
         const [movies, count] = await Promise.all([
           strapi.entityService.findMany("api::movie.movie", {
             filters: filter,
-            start: SEARCH_RESULTS_LIMIT * (page - 1),
-            limit: SEARCH_RESULTS_LIMIT,
+            start: RESULTS_LIMIT * (page - 1),
+            limit: RESULTS_LIMIT,
             populate: "*",
           }),
           strapi.entityService.count("api::movie.movie", { filters: filter }),
@@ -242,8 +244,8 @@ export default factories.createCoreController(
           results,
           pagination: {
             page,
-            pageSize: SEARCH_RESULTS_LIMIT,
-            pageCount: Math.ceil(count / SEARCH_RESULTS_LIMIT),
+            pageSize: RESULTS_LIMIT,
+            pageCount: Math.ceil(count / RESULTS_LIMIT),
             total: count,
           },
         };

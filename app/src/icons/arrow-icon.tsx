@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = React.SVGProps<SVGSVGElement>;
 
-export default function BackIcon(props: Props) {
+export default function ArrowIcon(props: Props) {
   return (
     <svg enableBackground="new 0 0 32 32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path

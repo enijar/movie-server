@@ -5,7 +5,7 @@ import * as Style from "@/components/video/video.style";
 import screenfull from "screenfull";
 import { type MovieType } from "@/types";
 import Rating from "@/components/rating/rating";
-import BackIcon from "@/icons/back-icon";
+import ArrowIcon from "@/icons/arrow-icon";
 
 type Props = MovieType;
 
@@ -33,7 +33,7 @@ export default function Video(props: Props) {
   return (
     <Style.Wrapper>
       <Style.Back href="/movies">
-        <BackIcon />
+        <ArrowIcon />
         <span>Back to movies</span>
       </Style.Back>
       <video ref={videoRef} poster={props.poster} />
