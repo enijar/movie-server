@@ -15,7 +15,7 @@ export const SearchWrapper = styled.div`
 
   button {
     display: block;
-    width: 1rem;
+    inline-size: 1rem;
     background-color: transparent;
     border: none;
     padding: 0;
