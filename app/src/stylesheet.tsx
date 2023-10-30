@@ -23,9 +23,5 @@ export default function Stylesheet(props: Props) {
     return <>{props.children}</>;
   }
 
-  return (
-    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {props.children}
-    </StyleSheetManager>
-  );
+  return <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{props.children}</StyleSheetManager>;
 }

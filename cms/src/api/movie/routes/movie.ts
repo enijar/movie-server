@@ -32,7 +32,7 @@ export default {
       },
     },
     {
-      method: "POST",
+      method: "GET",
       path: "/movies/search",
       handler: "movie.search",
       config: {

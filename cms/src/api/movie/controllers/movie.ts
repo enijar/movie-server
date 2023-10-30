@@ -8,7 +8,8 @@ import { Strapi } from "@strapi/types";
 import { z } from "zod";
 import sharp from "sharp";
 
-const LIMIT_PER_PAGE = 50;
+const API_RESULTS_LIMIT = 50;
+const SEARCH_RESULTS_LIMIT = 10;
 const DELAY_BETWEEN_PAGES = 0;
 
 const schema = z.object({
@@ -106,7 +107,7 @@ async function updateMovies(strapi: Strapi, page = 1) {
     url.hostname = hostname;
     url.searchParams.set("sort_by", "download_count");
     url.searchParams.set("quality", "1080p");
-    url.searchParams.set("limit", LIMIT_PER_PAGE.toString());
+    url.searchParams.set("limit", API_RESULTS_LIMIT.toString());
     url.searchParams.set("language", "en");
     url.searchParams.set("page", `${page}`);
     const res = await fetch(url.toString());
@@ -210,21 +211,39 @@ export default factories.createCoreController(
         return res;
       },
       async search(ctx) {
-        const res = await strapi.entityService.findPage("api::movie.movie", {
-          filter: {
-            title: {
-              $contains: ctx.query.title,
-            },
+        let page = parseInt(ctx.query.page ?? "1");
+        if (isNaN(page) || page < 1) {
+          page = 1;
+        }
+        const filter = {
+          title: {
+            $contains: String(ctx.query.query ?? ""),
           },
-          populate: "*",
-        });
-        res.results = res.results.map((movie) => {
+        };
+        const [movies, count] = await Promise.all([
+          strapi.entityService.findMany("api::movie.movie", {
+            filters: filter,
+            start: SEARCH_RESULTS_LIMIT * (page - 1),
+            limit: SEARCH_RESULTS_LIMIT,
+            populate: "*",
+          }),
+          strapi.entityService.count("api::movie.movie", { filters: filter }),
+        ]);
+        const results = movies.map((movie) => {
           return {
             ...movie,
             poster: `${process.env.URL}${movie.poster.url}`,
           };
         });
-        return res;
+        return {
+          results,
+          pagination: {
+            page,
+            pageSize: SEARCH_RESULTS_LIMIT,
+            pageCount: Math.ceil(count / SEARCH_RESULTS_LIMIT),
+            total: count,
+          },
+        };
       },
       async update() {
         await updateMovies(strapi);
