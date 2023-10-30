@@ -13,7 +13,11 @@ export default function Rating(props: Props) {
   return (
     <Style.Wrapper>
       {Array.from({ length: maxRating }).map((_, index) => {
-        return <StarIcon key={index} style={{ color: index + 1 <= rating ? "currentColor" : "#333333" }} />;
+        return (
+          <Style.Star key={index} $active={index + 1 <= rating}>
+            <StarIcon />
+          </Style.Star>
+        );
       })}
     </Style.Wrapper>
   );
