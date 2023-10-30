@@ -36,6 +36,15 @@ const schema = z.object({
 
 const hostname = "yts.proxyninja.net";
 
+function fixPosterUrl(posterUrl: string) {
+  if (!posterUrl.startsWith("http")) {
+    return `${process.env.URL}${posterUrl}`;
+  }
+  const url = new URL(posterUrl);
+  url.hostname = hostname;
+  return url.toString();
+}
+
 async function downloadPoster(imageUrl: string, ytsId: string) {
   const uploadsDir = path.resolve(
     __dirname,
@@ -192,10 +201,7 @@ export default factories.createCoreController(
           populate: "*",
         });
         res.results = res.results.map((movie) => {
-          return {
-            ...movie,
-            poster: `${process.env.URL}${movie.poster.url}`,
-          };
+          return { ...movie, poster: fixPosterUrl(movie.poster.url) };
         });
         return res;
       },
@@ -207,7 +213,7 @@ export default factories.createCoreController(
             populate: "*",
           }
         );
-        res.poster = `${process.env.URL}${res.poster.url}`;
+        res.poster = fixPosterUrl(res.poster.url);
         return res;
       },
       async search(ctx) {
@@ -230,10 +236,7 @@ export default factories.createCoreController(
           strapi.entityService.count("api::movie.movie", { filters: filter }),
         ]);
         const results = movies.map((movie) => {
-          return {
-            ...movie,
-            poster: `${process.env.URL}${movie.poster.url}`,
-          };
+          return { ...movie, poster: fixPosterUrl(movie.poster.url) };
         });
         return {
           results,
