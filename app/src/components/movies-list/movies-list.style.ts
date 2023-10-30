@@ -50,12 +50,12 @@ export const MoviesListItems = styled.div`
   grid-auto-rows: max-content;
   column-gap: 1rem;
   row-gap: 2rem;
-`;
-
-export const MoviesListWrapper = styled.div`
   inline-size: 100%;
   max-inline-size: 60rem;
   margin-inline: auto;
+`;
+
+export const MoviesListWrapper = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
