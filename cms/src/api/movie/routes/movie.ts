@@ -31,5 +31,14 @@ export default {
         middlewares: [],
       },
     },
+    {
+      method: "POST",
+      path: "/movies/search",
+      handler: "movie.search",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

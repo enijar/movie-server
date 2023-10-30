@@ -209,6 +209,23 @@ export default factories.createCoreController(
         res.poster = `${process.env.URL}${res.poster.url}`;
         return res;
       },
+      async search(ctx) {
+        const res = await strapi.entityService.findPage("api::movie.movie", {
+          filter: {
+            title: {
+              $contains: ctx.query.title,
+            },
+          },
+          populate: "*",
+        });
+        res.results = res.results.map((movie) => {
+          return {
+            ...movie,
+            poster: `${process.env.URL}${movie.poster.url}`,
+          };
+        });
+        return res;
+      },
       async update() {
         await updateMovies(strapi);
       },
