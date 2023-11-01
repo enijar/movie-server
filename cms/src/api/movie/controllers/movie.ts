@@ -251,10 +251,13 @@ export default factories.createCoreController(
             start: RESULTS_LIMIT * (page - 1),
             limit: RESULTS_LIMIT,
             populate: "*",
+            sort: [{ seeds: "desc" }, { year: "desc" }],
           }),
           strapi.entityService.count("api::movie.movie", { filters: filter }),
         ]);
         const results = movies.map((movie) => {
+          // fixme: movie.poster type
+          // @ts-ignore
           return { ...movie, poster: fixPosterUrl(movie.poster.url) };
         });
         return {
