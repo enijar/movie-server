@@ -723,11 +723,12 @@ export interface ApiMovieMovie extends Schema.CollectionType {
     title: Attribute.String & Attribute.Required;
     synopsis: Attribute.Text;
     rating: Attribute.Decimal & Attribute.Required;
-    year: Attribute.Date & Attribute.Required;
     poster: Attribute.Media;
     ytsId: Attribute.String & Attribute.Required;
     torrents: Attribute.JSON;
     uuid: Attribute.UID<'api::movie.movie', 'ytsId'>;
+    seeds: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    year: Attribute.Integer & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

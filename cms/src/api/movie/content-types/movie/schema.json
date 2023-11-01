@@ -23,10 +23,6 @@
       "type": "decimal",
       "required": true
     },
-    "year": {
-      "type": "date",
-      "required": true
-    },
     "poster": {
       "type": "media",
       "multiple": false,
@@ -47,6 +43,14 @@
     "uuid": {
       "type": "uid",
       "targetField": "ytsId"
+    },
+    "seeds": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "year": {
+      "type": "integer",
+      "required": true
     }
   }
 }

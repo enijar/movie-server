@@ -3,7 +3,7 @@ import { z } from "zod";
 export const movieSchema = z.object({
   id: z.number(),
   title: z.string(),
-  year: z.string(),
+  year: z.number(),
   synopsis: z.string(),
   rating: z.number(),
   poster: z.string(),

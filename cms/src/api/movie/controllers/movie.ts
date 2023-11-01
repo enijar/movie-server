@@ -12,7 +12,7 @@ const API_RESULTS_LIMIT = 50;
 const RESULTS_LIMIT = 50;
 const DELAY_BETWEEN_PAGES = 0;
 
-const schema = z.object({
+const apiSchema = z.object({
   data: z.object({
     movies: z.array(
       z.object({
@@ -33,6 +33,9 @@ const schema = z.object({
     ),
   }),
 });
+
+// todo: fix movie type
+type Movie = any;
 
 const hostname = "yts.proxyninja.net";
 
@@ -113,6 +116,7 @@ async function downloadPoster(imageUrl: string, ytsId: string) {
 
 async function updateMovies(strapi: Strapi, page = 1) {
   try {
+    console.log(`[updateMovies] fetching page ${page}`);
     const url = new URL("https://yts.mx/api/v2/list_movies.json");
     url.hostname = hostname;
     url.searchParams.set("sort_by", "download_count");
@@ -121,31 +125,40 @@ async function updateMovies(strapi: Strapi, page = 1) {
     url.searchParams.set("language", "en");
     url.searchParams.set("page", `${page}`);
     const res = await fetch(url.toString());
-    const { data } = schema.parse(await res.json());
-    type Movie = any;
-    const movies: Movie[] = [];
-    for (const movie of data.movies) {
-      const ytsId = String(movie.id);
-      const file = await downloadPoster(movie.large_cover_image, ytsId);
-      movies.push({
-        ytsId,
-        uuid: ytsId,
-        title: movie.title,
-        synopsis: movie.summary,
-        rating: movie.rating,
-        year: `${movie.year}-01-01`,
-        poster: file.id,
-        torrents: movie.torrents.map((torrent) => {
-          const url = new URL(torrent.url);
-          url.hostname = hostname;
-          url.searchParams.set("v", "0.1");
-          return {
-            ...torrent,
-            url: url.toString(),
-          };
-        }),
-      });
-    }
+    const { data } = apiSchema.parse(await res.json());
+
+    console.log(`[updateMovies] processing ${data.movies.length} movies`);
+
+    const movies = await Promise.all(
+      data.movies.map(async (movie) => {
+        const ytsId = String(movie.id);
+        const file = await downloadPoster(movie.large_cover_image, ytsId);
+        const seeds = movie.torrents.reduce((seeds, torrent) => {
+          return seeds + (torrent.seeds ?? 0);
+        }, 0);
+        return {
+          ytsId,
+          uuid: ytsId,
+          title: movie.title,
+          synopsis: movie.summary,
+          rating: movie.rating,
+          year: movie.year,
+          poster: file.id,
+          torrents: movie.torrents.map((torrent) => {
+            const url = new URL(torrent.url);
+            url.hostname = hostname;
+            url.searchParams.set("v", "0.1");
+            return {
+              ...torrent,
+              url: url.toString(),
+            };
+          }),
+          seeds,
+        };
+      })
+    );
+
+    console.log(`[updateMovies] updating ${movies.length} DB records`);
 
     await Promise.allSettled(
       movies.map(async (movie) => {
@@ -178,9 +191,11 @@ async function updateMovies(strapi: Strapi, page = 1) {
       })
     );
     await new Promise((resolve) => setTimeout(resolve, DELAY_BETWEEN_PAGES));
+    console.log("[updateMovies] attempting to process next page");
     return updateMovies(strapi, page + 1);
   } catch (err) {
     console.error(err);
+    console.log("[updateMovies] finished");
   }
 }
 
@@ -201,6 +216,7 @@ export default factories.createCoreController(
           page,
           pageSize,
           populate: "*",
+          sort: [{ seeds: "desc" }, { year: "desc" }],
         });
         res.results = res.results.map((movie) => {
           return { ...movie, poster: fixPosterUrl(movie.poster.url) };

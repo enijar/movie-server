@@ -24,7 +24,7 @@ export default {
     },
     {
       method: "GET",
-      path: "/movie/update",
+      path: "/movies/update",
       handler: "movie.update",
       config: {
         policies: [],

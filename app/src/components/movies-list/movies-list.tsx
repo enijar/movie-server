@@ -71,13 +71,12 @@ export default function MoviesList(props: MoviesListType) {
       />
       <Style.MoviesListItems>
         {movies.map((movie) => {
-          const [year] = movie.year.split("-");
           return (
             <Style.MoviesListItem key={movie.id} href={`/movie/${movie.id}`}>
               <img src={movie.poster} alt="" loading="lazy" />
               <Style.MoviesListItemInfo>
                 <Rating rating={movie.rating} />
-                <time>{year}</time>
+                <time>{movie.year}</time>
                 <h3>{movie.title}</h3>
               </Style.MoviesListItemInfo>
             </Style.MoviesListItem>
