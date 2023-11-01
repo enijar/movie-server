@@ -12,8 +12,6 @@ type Props = MovieType;
 export default function Video(props: Props) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
-  const [year] = props.year.split("-");
-
   React.useEffect(() => {
     const video = videoRef.current;
     if (video === null) return;
@@ -40,7 +38,7 @@ export default function Video(props: Props) {
       <h1>{props.title}</h1>
       <Style.Info>
         <Rating rating={props.rating} />
-        <time>{year}</time>
+        <time>{props.year}</time>
       </Style.Info>
       <p>{props.synopsis}</p>
     </Style.Wrapper>
