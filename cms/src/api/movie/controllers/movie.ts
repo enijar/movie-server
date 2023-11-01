@@ -27,6 +27,7 @@ const apiSchema = z.object({
             url: z.string().url(),
             quality: z.string().min(1),
             seeds: z.number(),
+            hash: z.string(),
           })
         ),
       })

@@ -7,6 +7,14 @@ export const movieSchema = z.object({
   synopsis: z.string(),
   rating: z.number(),
   poster: z.string(),
+  torrents: z.array(
+    z.object({
+      url: z.string().url(),
+      quality: z.string().min(1),
+      seeds: z.number(),
+      hash: z.string(),
+    }),
+  ),
 });
 
 export type MovieType = z.infer<typeof movieSchema>;
