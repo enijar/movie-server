@@ -727,7 +727,7 @@ export interface ApiMovieMovie extends Schema.CollectionType {
     ytsId: Attribute.String & Attribute.Required;
     torrents: Attribute.JSON;
     uuid: Attribute.UID<'api::movie.movie', 'ytsId'>;
-    seeds: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    seeds: Attribute.Integer & Attribute.DefaultTo<0>;
     year: Attribute.Integer & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

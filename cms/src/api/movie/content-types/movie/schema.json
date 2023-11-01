@@ -45,8 +45,8 @@
       "targetField": "ytsId"
     },
     "seeds": {
-      "type": "biginteger",
-      "default": "0"
+      "type": "integer",
+      "default": 0
     },
     "year": {
       "type": "integer",

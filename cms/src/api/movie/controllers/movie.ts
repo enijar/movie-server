@@ -27,16 +27,13 @@ const apiSchema = z.object({
             url: z.string().url(),
             quality: z.string().min(1),
             seeds: z.number(),
-            hash: z.string(),
+            hash: z.string().min(1),
           })
         ),
       })
     ),
   }),
 });
-
-// todo: fix movie type
-type Movie = any;
 
 const hostname = "yts.proxyninja.net";
 
@@ -220,7 +217,10 @@ export default factories.createCoreController(
           sort: [{ seeds: "desc" }, { year: "desc" }],
         });
         res.results = res.results.map((movie) => {
-          return { ...movie, poster: fixPosterUrl(movie.poster.url) };
+          return {
+            ...movie,
+            poster: fixPosterUrl(movie.poster.url),
+          };
         });
         return res;
       },

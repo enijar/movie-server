@@ -12,23 +12,16 @@
     "bcrypt": "^5.1.1",
     "jose": "^5.0.1",
     "next": "14.0.0",
-    "parse-torrent": "^11.0.14",
-    "pump": "^3.0.0",
-    "range-parser": "^1.2.1",
     "react": "^18",
     "react-dom": "^18",
     "screenfull": "^6.0.2",
     "styled-components": "^6.1.0",
-    "webtorrent": "^2.1.27",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/pump": "^1.1.2",
-    "@types/range-parser": "^1.2.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/webtorrent": "^0.109.5",
     "typescript": "^5"
   }
 }

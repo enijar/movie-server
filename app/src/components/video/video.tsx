@@ -19,6 +19,7 @@ export default function Video(props: Props) {
 
     function fullscreen() {
       if (video === null) return;
+      video.play().catch(console.error);
       screenfull.request(video).catch((err) => console.error(err));
     }
 
@@ -34,7 +35,7 @@ export default function Video(props: Props) {
         <ArrowIcon />
         <span>Back to movies</span>
       </Style.Back>
-      <video ref={videoRef} poster={props.poster} />
+      <video ref={videoRef} poster={props.poster} src={`${process.env.NEXT_PUBLIC_STREAM_URL}/watch/${props.id}`} />
       <h1>{props.title}</h1>
       <Style.Info>
         <Rating rating={props.rating} />

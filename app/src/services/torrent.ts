@@ -1,6 +1,6 @@
 import * as path from "path";
 import WebTorrent, { type TorrentFile } from "webtorrent";
-import parseTorrent from "parse-torrent";
+import ParseTorrent, { toMagnetURI } from "parse-torrent";
 import { type MovieType } from "@/types";
 
 type CacheData = {
@@ -28,7 +28,7 @@ export default class Torrent {
     "udp://tracker.cyberia.is:6969/announce",
   ];
 
-  static storagePath = path.resolve(__dirname, "..", "..", "storage");
+  static storagePath = path.resolve(__dirname, "..", "..", "..", "..", "..", "..", "storage");
 
   static async download(movie: MovieType) {
     const now = Date.now();
@@ -73,8 +73,8 @@ export default class Torrent {
         return resolve(null);
       }
 
-      const parsedLink = parseTorrent(hash);
-      const magnetUri = parseTorrent.toMagnetURI({
+      const parsedLink = ParseTorrent(hash);
+      const magnetUri = toMagnetURI({
         ...parsedLink,
         announce: [...(parsedLink.announce ?? []), ...this.trackers],
       });
@@ -84,10 +84,9 @@ export default class Torrent {
       };
 
       function getFile(torrent: WebTorrent.Torrent): WebTorrent.TorrentFile | null {
-        const file = torrent.files.find((file) => {
+        const file = (torrent.files ?? []).find((file) => {
           return file.name.endsWith(".mp4");
         });
-
         return (file as WebTorrent.TorrentFile) ?? null;
       }
 
