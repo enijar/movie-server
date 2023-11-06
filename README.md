@@ -2,6 +2,8 @@
 
 Watch movies in your browser.
 
+![Screenshot](.github/misc/screenshot.png)
+
 ### Getting Started
 
 ```shell
