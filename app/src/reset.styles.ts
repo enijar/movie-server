@@ -7,11 +7,6 @@ export const Reset = createGlobalStyle`
     --color-primary: #be3b58;
     --color-background: #0f0f0f;
     --color-text: #f0f0f0;
-
-    @media (prefers-color-scheme: light) {
-      --color-text: #0f0f0f;
-      --color-background: #f0f0f0;
-    }
   }
 
   * {
