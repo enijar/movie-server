@@ -1,4 +1,4 @@
-# Movie Server
+# 🍿 Movie Server
 
 Watch movies in your browser.
 
