@@ -24,15 +24,6 @@ export default {
     },
     {
       method: "GET",
-      path: "/movies/update",
-      handler: "movie.update",
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: "GET",
       path: "/movies/search",
       handler: "movie.search",
       config: {
